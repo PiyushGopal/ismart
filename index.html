@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISMART Tool</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+<header>
+        <center> <h1>ISMART Tool</h1> </center>
+       <center>  <p>(Investigation of Satellite data for Monitoring Air quality using Remote sensing Technology)</p> </center>
+    </header>
+
+    <nav>
+        <ul>
+          <h3>  <a href="#home">Home</a></h3>
+         <h3>  <a href="#about">About ISMART</a></h3>
+          <h3> <a href="#features">Features</a></h3>
+          <h3>  <a href="#contact">Contact Us</a></h3>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <h2 align = "center">Welcome to ISMART!</h2>
+           </section>
+
+    <section id="about">
+               <center><p>ISMART is developed with the aim of addressing the challenges of air pollution. By harnessing the capabilities of the Sentinel 5P TROPOMI datasets, ISMART offers comprehensive insights into air quality levels across regions.</p></center>
+    </section>
+   
+
+    <div class="all-input">
+    <div align="center" id ="datelabel"><label for="inpDate">Enter the date</label>
+        <input align ="center" type="date" name="" id="inpDate"></div>
+    <div align="center" class="input-group flex-nowrap" id ="input1">
+        <span class="input-group-text" id="addon-wrapping">Longitude</span>
+        <input type="text" id="lat" class="form-control" placeholder="Please enter the value" aria-label="Username" aria-describedby="addon-wrapping">
+    </div>
+    <div align="center" class="input-group flex-nowrap" id ="input2">
+      <span class="input-group-text" id="addon-wrapping">Latitude</span>
+      <input type="text" id="lon" class="form-control" placeholder="Please enter the value" aria-label="Username" aria-describedby="addon-wrapping">
+    </div>
+    <!-- Example single danger button -->
+    <div align ="center"class="dropdown mt-3" id ="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown">
+        Choose a Gas
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="book-dropdown">
+        <li><a class="dropdown-item" href="#" data-gas="CO">Carbon Monoxide</a></li>
+        <li><a class="dropdown-item" href="#" data-gas="NO2">Nitrogen Dioxide</a></li>
+        <li><a class="dropdown-item" href="#" data-gas="SO2">Sulphur Dioxide</a></li>
+      </ul>
+    </div>
+    <br>
+    <br>
+    <center><button id="btnDisplay" type="button" class="btn btn-primary">Submit</button></center>
+   </div>
+    
+      <div align ="center"id="co" class="divElem" style="display: none;">
+        <p id="coMsg"></p>
+        <p id="coAvgVal">Average Value in the grid: 2.96e-02 mol/m^2</p>
+        <p id="coMidVal">Median Value in the Grid: 2.90-2 mol/m^2</p>
+        <p id="coStdDev">Standard deviation in the Grid: 2.14e-03 mol/m^2</p>
+        <img id="imgCO" src="images\fig 1.png" alt="output" width="600" height="400">
+    </div>
+    <div align ="center" id="no2" class="divElem" style="display: none;">
+        <p id="no2Msg"></p>
+        <p id="no2AvgVal">Average Value in the grid: 5.26e-05 mol/m^2</p>
+        <p id="no2MidVal">Median Value in the Grid: 5.39e-05 mol/m^2</p>
+        <p id="no2StdDev">Standard deviation in the Grid: 4.92e-06 mol/m^2</p>
+        <img id="imgNO2" src="images\fig 2 img.png" alt="output" width="600" height="400">
+    </div>
+    <div align ="center" id="so2" class="divElem" style="display: none;">
+        <p id="so2Msg"></p>
+        <p id="so2AvgVal">Average Value in the grid: 1.77e-04 mol/m^2</p>
+        <p id="so2MidVal">Median Value in the Grid: 2.08e-04 mol/m^2</p>
+        <p id="so2StdDev">Standard deviation in the Grid: 6.08e-04 mol/m^2</p>
+        <img id="imgSO2" src="images\fig 2.png" alt="output" width="600" height="400">
+    </div>
+
+ <section id="contact">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or feedback, feel free to <a href="mailto:panimalk@srmist.edu.in">email us</a>.</p>
+    </section>
+<footer>
+        <p>&copy; 2023 ISMART. All rights reserved.</p>
+    </footer>
+    <script>
+        // const date= document.getElementById('inpDate');
+        // const lat= document.getElementById('input1');
+        // const lon=document.getElementById('input2');
+        const myDiv= document.getElementById('myDiv');
+        const avgVal=document.getElementById('avgVal');
+        const midVal=document.getElementById('midVal');
+        const imgCO=document.getElementById('imgCO');
+        const inpMsg= document.getElementById('inpMsg');
+        const btn= document.getElementById('btnDisplay');
+
+        
+        btn.addEventListener('click', function(event){
+          // Get a reference to the submit button element
+          var submitButton = document.getElementById("btnDisplay");
+          var datelabel = document.getElementById("datelabel");
+          var input1 = document.getElementById("input1");
+          var input2 = document.getElementById("input2");
+          var dropdown = document.getElementById("dropdown");
+          var home = document.getElementById("home");
+          var about = document.getElementById("about");
+
+          
+      
+          // Hide the submit button by setting its "style.display" property to "none"
+          submitButton.style.display = "none";
+          datelabel.style.display = "none";
+          input1.style.display = "none";
+          input2.style.display = "none";
+          dropdown.style.display = "none";
+          home.style.display = "none";
+          about.style.display = "none";
+
+      });
+
+    
+      // Add an event listener to the submit button
+      // Add event listeners to the dropdown menu items
+var dropdownItems = document.querySelectorAll('.dropdown-item');
+
+dropdownItems.forEach(function(item) {
+    item.addEventListener('click', function() {
+        // Get the selected gas from the data-gas attribute
+        var selectedGas = item.getAttribute('data-gas');
+
+        // Set the selected gas in a data attribute of the dropdown button
+        document.getElementById('book-dropdown').setAttribute('data-selected-gas', selectedGas);
+    });
+});
+
+// Add an event listener to the submit button
+document.getElementById("btnDisplay").addEventListener("click", function() {
+    // Get the selected gas from the data attribute of the dropdown button
+    var selectedGas = document.getElementById('book-dropdown').getAttribute('data-selected-gas');
+    
+    // Get the result divs for each gas
+    var coDiv = document.getElementById("co");
+    var no2Div = document.getElementById("no2");
+    var so2Div = document.getElementById("so2");
+
+    // Hide all result divs
+    coDiv.style.display = "none";
+    no2Div.style.display = "none";
+    so2Div.style.display = "none";
+
+    // Display data based on the selected gas
+    switch (selectedGas) {
+        case "CO":
+            coDiv.style.display = "block";
+            break;
+
+        case "NO2":
+            no2Div.style.display = "block";
+            break;
+
+        case "SO2":
+            so2Div.style.display = "block";
+            break;
+
+        default:
+            // Handle other cases or display an error message
+            break;
+    }
+});
+
+
+      
+
+
+        
+      
+        
+      
+
+
+    
+    </script>
+    <script src="popper/popper.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
